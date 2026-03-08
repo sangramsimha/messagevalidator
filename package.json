@@ -1,0 +1,18 @@
+﻿{
+  "name": "whatsapp-message-validator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Utility vs marketing WhatsApp template validator with calibrated scoring and feedback loop",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "retrain": "node retrain-model.js",
+    "worker": "node retrain-worker.js",
+    "test": "node test/run-tests.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
+

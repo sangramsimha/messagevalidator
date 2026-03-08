@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WhatsApp Utility Classifier</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>WhatsApp Utility Message Validator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -14,23 +14,26 @@
     <section class="hero">
       <p class="eyebrow">Internal Tool</p>
       <h1>WhatsApp Utility Message Validator</h1>
-      <p class="subtext">
-        Enter a WhatsApp template message and get utility approval likelihood plus 5 utility-safe alternatives.
-      </p>
+      <p class="subtext">Score messages with calibrated utility probability, decision bands, and utility-safe rewrites.</p>
     </section>
 
-    <section class="card">
+    <section class="card compact">
       <h2>Model Status</h2>
-      <p id="trainingStatus" class="status muted">Loading pretrained model...</p>
+      <p id="trainingStatus" class="status muted">Loading model metadata...</p>
+      <div id="metricsRow" class="metrics-row"></div>
     </section>
 
     <section class="card">
       <h2>Validate a Message</h2>
-      <textarea id="candidateMessage" rows="7" placeholder="Paste a message template here..."></textarea>
+      <textarea id="candidateMessage" rows="8" placeholder="Paste a WhatsApp template message here..."></textarea>
+      <div class="row form-row">
+        <input id="contextInput" type="text" placeholder="Context (optional, e.g., SkinKraft renewals)" />
+        <input id="languageInput" type="text" placeholder="Language (optional, e.g., en)" />
+      </div>
       <div class="row">
         <button id="analyzeBtn" class="btn">Analyze Message</button>
       </div>
-      <p id="analyzeStatus" class="status muted">Model loading...</p>
+      <p id="analyzeStatus" class="status muted">Enter a message to start.</p>
     </section>
 
     <section class="card output">
@@ -42,16 +45,52 @@
       <div class="meter">
         <div id="meterFill"></div>
       </div>
+
+      <div class="band-wrap">
+        <span>Decision band</span>
+        <span id="decisionBand" class="badge badge-neutral">Not analyzed</span>
+      </div>
+
       <p id="scoreNote" class="status muted">No analysis run yet.</p>
 
+      <h3>Why this score</h3>
+      <div class="insights-grid">
+        <div class="insight">
+          <h4>Top Utility Signals</h4>
+          <ul id="utilitySignals"></ul>
+        </div>
+        <div class="insight">
+          <h4>Top Marketing Risks</h4>
+          <ul id="riskSignals"></ul>
+        </div>
+      </div>
+      <div class="insight wide">
+        <h4>What to change</h4>
+        <ul id="changeList"></ul>
+      </div>
+
       <h3>Suggested utility-safe alternatives (&gt;95% target)</h3>
-      <ol id="alternativesList" class="alternatives">
-        <li>Enter a message and click Analyze Message to generate alternatives.</li>
-      </ol>
+      <div id="alternativesList" class="alternatives-cards"></div>
+    </section>
+
+    <section class="card compact">
+      <h2>Feedback Loop (Optional)</h2>
+      <p class="muted">After WhatsApp review, submit final outcome to improve retraining data.</p>
+      <div class="row form-row">
+        <input id="templateIdInput" type="text" placeholder="Template ID (optional)" />
+        <select id="finalLabelInput">
+          <option value="">Select final WhatsApp label</option>
+          <option value="utility">Utility</option>
+          <option value="marketing">Marketing</option>
+        </select>
+      </div>
+      <div class="row">
+        <button id="submitFeedbackBtn" class="btn ghost">Submit Feedback</button>
+      </div>
+      <p id="feedbackStatus" class="status muted">Analyze a message first, then submit actual outcome.</p>
     </section>
   </main>
 
-  <script src="./training-data.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
