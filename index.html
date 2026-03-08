@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhatsApp Utility Classifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Internal Tool</p>
+      <h1>WhatsApp Utility Message Validator</h1>
+      <p class="subtext">
+        Enter a WhatsApp template message and get utility approval likelihood plus 5 utility-safe alternatives.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Model Status</h2>
+      <p id="trainingStatus" class="status muted">Loading pretrained model...</p>
+    </section>
+
+    <section class="card">
+      <h2>Validate a Message</h2>
+      <textarea id="candidateMessage" rows="7" placeholder="Paste a message template here..."></textarea>
+      <div class="row">
+        <button id="analyzeBtn" class="btn">Analyze Message</button>
+      </div>
+      <p id="analyzeStatus" class="status muted">Model loading...</p>
+    </section>
+
+    <section class="card output">
+      <h2>Results</h2>
+      <div class="probability">
+        <span>Utility approval likelihood</span>
+        <strong id="utilityScore">--%</strong>
+      </div>
+      <div class="meter">
+        <div id="meterFill"></div>
+      </div>
+      <p id="scoreNote" class="status muted">No analysis run yet.</p>
+
+      <h3>Suggested utility-safe alternatives (&gt;95% target)</h3>
+      <ol id="alternativesList" class="alternatives">
+        <li>Enter a message and click Analyze Message to generate alternatives.</li>
+      </ol>
+    </section>
+  </main>
+
+  <script src="./training-data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
