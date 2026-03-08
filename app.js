@@ -181,7 +181,7 @@ function renderPrediction(result) {
   );
   renderExplanationList(
     riskSignals,
-    (result.explanations?.top_marketing_risks || []).map((item) => `${item.term} (${item.source})`),
+    (result.explanations?.top_marketing_risks || []).map((item) => `${item.term} (impact ${item.impact})`),
     'No high-risk signals detected.'
   );
   renderExplanationList(changeList, result.explanations?.what_to_change || [], 'No changes suggested.');
@@ -737,4 +737,6 @@ function fnv1a(text) {
   }
   return hash >>> 0;
 }
+
+
 
