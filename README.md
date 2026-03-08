@@ -1,31 +1,26 @@
 ﻿# WhatsApp Utility Classifier
 
-Accuracy-focused WhatsApp template validator for internal ops. The app now includes:
+Accuracy-focused WhatsApp template validator for internal ops.
 
-- Calibrated utility probability (holdout-based).
-- Decision bands: `Safe Utility`, `Borderline`, `Likely Marketing`.
-- Explainability panel (utility signals, marketing risks, what to change).
-- Structured alternatives with rationale.
-- Backend APIs + SQLite feedback loop + retraining scripts.
+## Modes
 
-## Run Local
+- API mode: uses backend endpoints (`/analyze`, `/feedback`, `/model-info`).
+- Offline mode: if backend is unavailable, the UI auto-switches to local pretrained inference from `training-data.js`.
 
-Option 1:
-- `npm start`
+## Run Local (API mode)
 
-Option 2 (double-click):
-- `start-local.bat`
+1. `npm start`
+2. Open `http://localhost:8080`
 
-Then open:
-- `http://localhost:8080`
+If you see `ERR_CONNECTION_REFUSED`, backend is not running.
 
-If you see `ERR_CONNECTION_REFUSED`, it means the server is not running. Start it again and keep that terminal window open.
+## Run Without Backend (offline mode)
+
+Open `index.html` directly in the browser. The app will still analyze messages and generate alternatives locally.
 
 ## API
 
 ### `POST /analyze`
-Request:
-
 ```json
 {
   "message": "Hi {{1}}, your order {{2}} is shipped.",
@@ -34,26 +29,7 @@ Request:
 }
 ```
 
-Response:
-
-```json
-{
-  "utility_probability": 0.91,
-  "decision_band": "Safe Utility",
-  "risk_terms": [],
-  "explanations": {
-    "top_utility_signals": [],
-    "top_marketing_risks": [],
-    "what_to_change": []
-  },
-  "alternatives": [],
-  "model_version": "model-..."
-}
-```
-
 ### `POST /feedback`
-Request:
-
 ```json
 {
   "template_id": "renewal_confirmation",
@@ -67,20 +43,15 @@ Request:
 ## Retraining
 
 - One-shot retrain: `npm run retrain`
-- Periodic retrain worker (default every 24h): `npm run worker`
+- Periodic retrain worker: `npm run worker`
 - Manual API retrain trigger: `POST /retrain`
-
-Model artifact is stored at `data/model-artifact.json`.
-Feedback is stored in SQLite at `data/feedback.db`.
 
 ## Test
 
-- Run: `npm test`
-- Includes checks for guardrails, explanations, and placeholder-safe unique alternatives.
+- `npm test`
 
 ## Notes
 
-- Seed training rows are loaded from `training-data.js`.
-- Runtime requires Node `>=22` because this uses built-in `node:sqlite`.
-- `data/feedback.db` is gitignored.
-- This is backend-enabled. Plain static hosting alone (without the Node API) is not sufficient.
+- Seed training rows: `training-data.js`
+- Backend storage: `data/feedback.db` (gitignored)
+- Node requirement for backend: `>=22`

@@ -85,7 +85,7 @@ server.listen(PORT, HOST, () => {
 
 function serveStatic(req, res, pathname) {
   const safePath = normalizePath(pathname);
-  const requested = safePath === '/' ? '/index.html' : safePath;
+  const requested = (!safePath || safePath === '/' || safePath === '\\') ? 'index.html' : safePath.replace(/^[/\\]+/, '');
   const filePath = path.join(STATIC_ROOT, requested);
 
   if (!filePath.startsWith(STATIC_ROOT)) {
@@ -153,3 +153,8 @@ function toNumberOrNull(value) {
   const n = Number(value);
   return Number.isFinite(n) ? n : null;
 }
+
+
+
+
+
