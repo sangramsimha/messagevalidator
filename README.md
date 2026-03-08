@@ -8,12 +8,18 @@ Accuracy-focused WhatsApp template validator for internal ops. The app now inclu
 - Structured alternatives with rationale.
 - Backend APIs + SQLite feedback loop + retraining scripts.
 
-## Run
+## Run Local
 
-1. Start server:
-   - `npm start`
-2. Open:
-   - `http://localhost:8080`
+Option 1:
+- `npm start`
+
+Option 2 (double-click):
+- `start-local.bat`
+
+Then open:
+- `http://localhost:8080`
+
+If you see `ERR_CONNECTION_REFUSED`, it means the server is not running. Start it again and keep that terminal window open.
 
 ## API
 
@@ -77,3 +83,4 @@ Feedback is stored in SQLite at `data/feedback.db`.
 - Seed training rows are loaded from `training-data.js`.
 - Runtime requires Node `>=22` because this uses built-in `node:sqlite`.
 - `data/feedback.db` is gitignored.
+- This is backend-enabled. Plain static hosting alone (without the Node API) is not sufficient.
